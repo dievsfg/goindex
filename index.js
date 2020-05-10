@@ -1,8 +1,8 @@
-// https://github.com/donwa/goindex/blob/master/使用及免责协议.md
+// 
 
 var authConfig = {
     "siteName": "GoIndex", // 网站名称
-    "root_pass": "index",  // 根目录密码，优先于.password
+    "root_pass": "1234",  // 根目录密码，优先于.password
     "version" : "1.0.6", // 程序版本
     "theme" : "material", // material  classic 
     "client_id": "202264815644.apps.googleusercontent.com",
@@ -20,7 +20,7 @@ var html = `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
   <title>${authConfig.siteName}</title>
-  <script src="//cdn.jsdelivr.net/combine/gh/jquery/jquery@3.2/dist/jquery.min.js,gh/donwa/goindex@${authConfig.version}/themes/${authConfig.theme}/app.js"></script>
+  <script src="//cdn.jsdelivr.net/combine/gh/jquery/jquery@3.2/dist/jquery.min.js,gh/dievsfg/goindex/themes/${authConfig.theme}/app.js"></script>
 </head>
 <body>
 </body>
@@ -125,7 +125,7 @@ class googleDrive {
     }
 
     async down(id, range=''){
-      let url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media`;
+      let url = `
       let requestOption = await this.requestOption();
       requestOption.headers['Range'] = range;
       return await fetch(url, requestOption);
@@ -146,7 +146,7 @@ class googleDrive {
       console.log(name, dir);
       let parent = await this.findPathId(dir);
       console.log(parent);
-      let url = 'https://www.googleapis.com/drive/v3/files';
+      let url = '
       let params = {'includeItemsFromAllDrives':true,'supportsAllDrives':true};
       params.q = `'${parent}' in parents and name = '${name}' andtrashed = false`;
       params.fields = "files(id, name, mimeType, size ,createdTime, modifiedTime, iconLink, thumbnailLink, shortcutDetails)";
@@ -192,7 +192,7 @@ class googleDrive {
       if(file == undefined){
         this.passwords[path] = null;
       }else{
-        let url = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`;
+        let url = `
         let requestOption = await this.requestOption();
         let response = await this.fetch200(url, requestOption);
         this.passwords[path] = await response.text();
@@ -220,7 +220,7 @@ class googleDrive {
         if (pageToken) {
             params.pageToken = pageToken;
         }
-        let url = 'https://www.googleapis.com/drive/v3/files';
+        let url = '
         url += '?'+this.enQuery(params);
         let requestOption = await this.requestOption();
         let response = await fetch(url, requestOption);
@@ -270,7 +270,7 @@ class googleDrive {
         return null;
       }
 
-      let url = 'https://www.googleapis.com/drive/v3/files';
+      let url = '
       let params = {'includeItemsFromAllDrives':true,'supportsAllDrives':true};
       params.q = `'${parent}' in parents and (mimeType = 'application/vnd.google-apps.folder' or mimeType = 'application/vnd.google-apps.shortcut') and name = '${name}'  and trashed = false`;
       params.fields = "nextPageToken, files(id, name, mimeType, shortcutDetails)";
@@ -303,7 +303,7 @@ class googleDrive {
 
     async fetchAccessToken() {
         console.log("fetchAccessToken");
-        const url = "https://www.googleapis.com/oauth2/v4/token";
+        const url = "
         const headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
         };
